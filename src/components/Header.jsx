@@ -237,14 +237,12 @@ const SignOut = styled.div`
   transition-duration: 167ms;
   text-align: center;
   display: none;
+  @media (max-width : 768px) {
+    top: -30px;
+  }
 `
 
 const User = styled(NavList)`
- a > svg {
-    width: 24px;
-    border-radius: 50%;
-  }
-
   a > img {
     width: 24px;
     height: 24px;
@@ -262,7 +260,7 @@ const User = styled(NavList)`
       display: flex;
       justify-content: center;
       cursor: pointer;
-      background-color: lightgray;
+      background-color: #d7dbd8;
     }
   }
 
