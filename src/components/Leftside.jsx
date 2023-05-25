@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Leftside = () => {
+const Leftside = (props) => {
     return (
         <Container>
             <ArtCard>

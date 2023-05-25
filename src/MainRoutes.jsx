@@ -16,7 +16,6 @@ const MainRoutes = createBrowserRouter([
             },
         ],
     },
-
     {
         path : "/login",
         element : <Login /> ,

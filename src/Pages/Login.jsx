@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import {
   MDBRow,
@@ -13,11 +13,26 @@ import {
   MDBTabsContent,
   MDBTabsPane
 } from 'mdb-react-ui-kit';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInAPI } from '../Redux/Action';
+import { useNavigate } from 'react-router-dom';
 
 
-const Login = () => {
+const Login = (props) => {
 
   const [loginRegisterActive, setLoginRegisterActive] = useState('login');
+  
+
+  const {user} = useSelector(state => state.userState)
+  const dispatch = useDispatch()
+
+  // const navigate = useNavigate()
+  // useEffect(() => {
+  //   // console.log("user" , user)
+  //   if(user) {
+  //     navigate("/")
+  //   }
+  // },[user, navigate])
 
   const handleLoginRegisterClick = (value) => {
     if (value === loginRegisterActive) {
@@ -26,6 +41,18 @@ const Login = () => {
 
     setLoginRegisterActive(value);
   };
+
+
+
+  const googleSignIn = () => {
+    dispatch(signInAPI())
+  }
+
+  const FormSubmit = (e) => {
+    e.preventDefault()
+  }
+
+  
 
   return (
     <Container>
@@ -72,7 +99,7 @@ const Login = () => {
                   <div className='text-center mb-3'>
                     <p>Sign in with:</p>
 
-                    <MDBBtn floating color="secondary" className='mx-1'>
+                    <MDBBtn floating color="secondary" className='mx-1' onClick={googleSignIn}>
                       <MDBIcon fab icon='google' />
                     </MDBBtn>
 
@@ -80,8 +107,8 @@ const Login = () => {
 
                   <p className='text-center'>or:</p>
 
-                  <MDBInput className='mb-4' type='email' id='form7Example1' label='Email address' />
-                  <MDBInput className='mb-4' type='password' id='form7Example2' label='Password' />
+                  <MDBInput className='mb-4' type='email' id='form7Example1' label='Email address' name='email'  />
+                  <MDBInput className='mb-4' type='password' id='form7Example2' label='Password' name='password' />
 
                   {/* <MDBRow className='mb-4'>
                     <MDBCol className='d-flex justify-content-center'>
@@ -109,11 +136,11 @@ const Login = () => {
                 </form>
               </MDBTabsPane>
               <MDBTabsPane show={loginRegisterActive === 'register'}>
-                <form>
+                <form onSubmit={FormSubmit}>
                   <div className='text-center mb-3'>
                     <p>Sign up with:</p>
 
-                    <MDBBtn floating color="secondary" className='mx-1'>
+                    <MDBBtn floating color="secondary" className='mx-1' onClick={googleSignIn}>
                       <MDBIcon fab icon='google' />
                     </MDBBtn>
 
