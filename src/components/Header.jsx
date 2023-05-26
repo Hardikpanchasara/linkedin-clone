@@ -5,8 +5,8 @@ import { signOutAPI } from '../Redux/Action'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Header = (props) => {
-  const user = useSelector(state => state.userState.user)
-  // const {user} = useSelector(state => state.userState)
+  // const user = useSelector(state => state.userState.user)
+  const {user} = useSelector(state => state.userState)
   console.log(user)
   const dispatch = useDispatch()
   const signOut = () => {
