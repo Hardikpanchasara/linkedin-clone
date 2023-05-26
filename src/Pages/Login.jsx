@@ -26,13 +26,13 @@ const Login = (props) => {
   const {user} = useSelector(state => state.userState)
   const dispatch = useDispatch()
 
-  // const navigate = useNavigate()
-  // useEffect(() => {
-  //   // console.log("user" , user)
-  //   if(user) {
-  //     navigate("/")
-  //   }
-  // },[user, navigate])
+  const navigate = useNavigate()
+  useEffect(() => {
+    // console.log("user" , user)
+    if(user) {
+      navigate("/")
+    }
+  },[user, navigate])
 
   const handleLoginRegisterClick = (value) => {
     if (value === loginRegisterActive) {
@@ -95,7 +95,7 @@ const Login = (props) => {
 
             <MDBTabsContent>
               <MDBTabsPane show={loginRegisterActive === 'login'}>
-                <form>
+                <form onSubmit={FormSubmit}>
                   <div className='text-center mb-3'>
                     <p>Sign in with:</p>
 

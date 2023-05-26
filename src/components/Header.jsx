@@ -1,8 +1,25 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { signOutAPI } from '../Redux/Action'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Header = (props) => {
+  const user = useSelector(state => state.userState.user)
+  // const {user} = useSelector(state => state.userState)
+  console.log(user)
+  const dispatch = useDispatch()
+  const signOut = () => {
+    dispatch(signOutAPI())
+  }
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    // console.log("user" , user)
+    if(user == null) {
+      navigate("/login")
+    }
+  },[user, navigate])
   return (
     <>
       <Container>
@@ -60,13 +77,15 @@ const Header = (props) => {
 
               <User>
                 <a>
-                  <img src="/images/user.svg" alt="" />
+                {
+                  user && user.photoURL ? <img src={user.photoURL} alt="user img" /> : <img src="/images/user.svg" alt="" />
+                }
                   <span>Me
                   <img src="/images/down-icon.svg" alt="" />
                   </span>
                 </a>
 
-                <SignOut>
+                <SignOut onClick={signOut} >
                   <a>Sign Out</a>
                 </SignOut>
               </User>
