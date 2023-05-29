@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import ReactPlayer from 'react-player'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { postArticleAPI } from '../Redux/Action'
+// import firebase from "firebase"
 
-const PostModal = () => {
+const PostModal = (props) => {
   const { user } = useSelector(state => state.userState)
   const dispatch = useDispatch()
 
@@ -12,6 +14,9 @@ const PostModal = () => {
   const [ videoLink , setVideoLink] = useState()
   const [ assetArea , setAssetArea] = useState()
 
+  const PostYourArticle = (payload) => {
+    dispatch(postArticleAPI(payload))
+  }
 
   const handleChange = (e) => {
     const image = e.target.files[0];
@@ -19,6 +24,7 @@ const PostModal = () => {
     if(image === "" || image === undefined)
     {
       alert(`not an image ,the file is a ${typeof image}`)
+      return ;
     }
     setSharedImage(image)
   }
@@ -36,7 +42,7 @@ const PostModal = () => {
       description : editorText,
     }
 
-    postArticle(payload)
+    PostYourArticle(payload)
     reset(e)
   }
   const switchAssetArea = (area) => {
@@ -53,6 +59,7 @@ const PostModal = () => {
 
   return (
     <>
+    {props.showModal}
       <Container>
         <Content>
           <Header>

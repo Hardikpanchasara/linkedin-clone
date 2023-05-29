@@ -2,13 +2,20 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import PostModal from './PostModal';
 import ReactPlayer from 'react-player';
+import { useDispatch, useSelector } from 'react-redux';
+import { getArticlesAPI } from '../Redux/Action';
 
 const Main = (props) => {
+  const {user} = useSelector(state => state.userState)
+  const {articles , loading} = useSelector(state => state.articleState)
+  // const articles = useSelector(state => state.articleState.articles)
+  // const loading = useSelector(state => state.articleState.loading)
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState("close");
 
   useEffect(() => {
-    props.getArticles()
-  }, []);
+    dispatch(getArticlesAPI())
+  }, [dispatch]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -31,20 +38,20 @@ const Main = (props) => {
 
   return (
     <>
-      {/* {props.articles.length === 0 ?
+      {articles.length === 0 ?
         <p>No articles to show.</p>
-        : */}
+        :
         <Container>
           <ShareBox>
             <div>
-              {props.user && props.user.photoURL ?
-                (<img src={props.user.photoURL} alt="" />)
+              {user && user.photoURL ?
+                (<img src={user.photoURL} alt="" />)
                 :
                 (<img src="/images/user.svg" alt="" />)
               }
               <button
                 onClick={handleClick}
-                disabled={props.loading ? true : false}
+                disabled={loading ? true : false}
                 className="post-space">
                 Start a Post
               </button>
@@ -75,11 +82,11 @@ const Main = (props) => {
 
           <Content>
             {
-              props.loading && <img src="./images/spin-loading.gif" alt="" />
+              loading && <img src="./images/spin-loading.gif" alt="" />
             }
             {
-              props.articles.length !== 0 &&
-              props.articles.map((article, key) => (
+              articles.length !== 0 &&
+              articles.map((article, key) => (
 
                 <Article key={key} >
                   <SharedActor>
@@ -151,7 +158,7 @@ const Main = (props) => {
 
           <PostModal showModal={showModal} handleClick={handleClick} />
         </Container>
-      {/* } */}
+      }
     </>
   );
 };
