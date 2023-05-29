@@ -21,8 +21,6 @@ import { useNavigate } from 'react-router-dom';
 const Login = (props) => {
 
   const [loginRegisterActive, setLoginRegisterActive] = useState('login');
-  
-
   const {user} = useSelector(state => state.userState)
   const dispatch = useDispatch()
 
@@ -38,11 +36,8 @@ const Login = (props) => {
     if (value === loginRegisterActive) {
       return;
     }
-
     setLoginRegisterActive(value);
   };
-
-
 
   const googleSignIn = () => {
     dispatch(signInAPI())
@@ -51,8 +46,6 @@ const Login = (props) => {
   const FormSubmit = (e) => {
     e.preventDefault()
   }
-
-  
 
   return (
     <Container>
