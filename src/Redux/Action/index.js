@@ -1,6 +1,8 @@
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth"
 import Firestore , { FirebaseAuth, GoogleProvider, storage } from "../../Firebase"
 import { GET_ARTICLES, SET_LOADING_STATUS, SET_USER } from "./actionType";
+import { collection } from "firebase/firestore";
+
 
 
 export const setUser = (payload) => ({
@@ -35,7 +37,8 @@ export const getUserAuth = () => {
     onAuthStateChanged(FirebaseAuth, (user) => {
       if (user) {
         dispatch(setUser(user));
-      } else {
+      } 
+      else {
         dispatch(setUser(null));
       }
     });
@@ -53,6 +56,8 @@ export const signOutAPI = () => {
       });
   };
 };
+
+
 
 export const postArticleAPI = (payload) => {
   return async (dispatch) => {
@@ -77,7 +82,7 @@ export const postArticleAPI = (payload) => {
           async () => {
             const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
             
-            Firestore.collection('articles').add({
+            collection(Firestore, "articles").add({
               actor: {
                 description: payload.user.email,
                 title: payload.user.displayName,
@@ -94,7 +99,7 @@ export const postArticleAPI = (payload) => {
           }
         );
       } else if (payload.video) {
-        Firestore.collection('articles').add({
+        collection(Firestore, "articles").add({
           actor: {
             description: payload.user.email,
             title: payload.user.displayName,
@@ -116,8 +121,16 @@ export const postArticleAPI = (payload) => {
   };
 }
 
+
 export const getArticlesAPI = () => {
   return (dispatch) => {
-    let payload;
-  }
+      let payload;
+
+      collection(Firestore, "articles")
+          .orderBy("actor.date", "desc")
+          .onSnapshot((snapshot) => {
+              payload = snapshot.docs.map((doc) => doc.data());
+              dispatch(getArticles(payload));
+          });
+  };
 }

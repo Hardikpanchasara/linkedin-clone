@@ -7,12 +7,13 @@ import { getArticlesAPI } from '../Redux/Action';
 
 const Main = (props) => {
   const {user} = useSelector(state => state.userState)
-  const {articles , loading} = useSelector(state => state.articleState)
+  const { articles, loading } = useSelector(state => state.articleState)
   // const articles = useSelector(state => state.articleState.articles)
   // const loading = useSelector(state => state.articleState.loading)
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState("close");
 
+  console.log(user)
   useEffect(() => {
     dispatch(getArticlesAPI())
   }, [dispatch]);
@@ -38,48 +39,50 @@ const Main = (props) => {
 
   return (
     <>
-      {articles.length === 0 ?
-        <p>No articles to show.</p>
-        :
-        <Container>
-          <ShareBox>
-            <div>
-              {user && user.photoURL ?
-                (<img src={user.photoURL} alt="" />)
-                :
-                (<img src="/images/user.svg" alt="" />)
-              }
-              <button
-                onClick={handleClick}
-                disabled={loading ? true : false}
-                className="post-space">
-                Start a Post
-              </button>
-            </div>
+    {
+      user ? 
+      <Container>
+        <ShareBox>
+          <div>
+            {user && user.photoURL ?
+              (<img src={user.photoURL} alt="" />)
+              :
+              (<img src="/images/user.svg" alt="" />)
+            }
+            <button
+              onClick={handleClick}
+              disabled={loading ? true : false}
+              className="post-space">
+              Start a Post
+            </button>
+          </div>
 
-            <div>
-              <button>
-                <img src="/images/photo-icon.png" className="post-icon" alt="" />
-                <span>Photo</span>
-              </button>
+          <div>
+            <button>
+              <img src="/images/photo-icon.png" className="post-icon" alt="" />
+              <span>Photo</span>
+            </button>
 
-              <button>
-                <img src="/images/video-icon.png" className="post-icon" alt="" />
-                <span>Video</span>
-              </button>
+            <button>
+              <img src="/images/video-icon.png" className="post-icon" alt="" />
+              <span>Video</span>
+            </button>
 
-              <button>
-                <img src="/images/event-icon.png" className="post-icon" alt="" />
-                <span>Event</span>
-              </button>
+            <button>
+              <img src="/images/event-icon.png" className="post-icon" alt="" />
+              <span>Event</span>
+            </button>
 
-              <button>
-                <img src="/images/article-icon.png" className="post-icon" alt="" />
-                <span>Write article</span>
-              </button>
-            </div>
-          </ShareBox>
+            <button>
+              <img src="/images/article-icon.png" className="post-icon" alt="" />
+              <span>Write article</span>
+            </button>
+          </div>
+        </ShareBox>
 
+        {articles.length === 0 ?
+          <p>No articles to show.</p>
+          :
           <Content>
             {
               loading && <img src="./images/spin-loading.gif" alt="" />
@@ -155,10 +158,13 @@ const Main = (props) => {
               ))
             }
           </Content>
+        }
 
-          <PostModal showModal={showModal} handleClick={handleClick} />
-        </Container>
-      }
+
+        <PostModal showModal={showModal} handleClick={handleClick} />
+      </Container>
+      : <h2>wait a minute ...</h2>
+    }
     </>
   );
 };
