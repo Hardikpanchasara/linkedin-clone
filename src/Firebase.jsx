@@ -1,14 +1,14 @@
 import { initializeApp } from "firebase/app";
 import {
-    createUserWithEmailAndPassword,
+    // createUserWithEmailAndPassword,
     getAuth,
-    signInWithEmailAndPassword,
+    // signInWithEmailAndPassword,
     GoogleAuthProvider,
-    signInWithPopup,
-    onAuthStateChanged,
+    // signInWithPopup,
+    // onAuthStateChanged,
 } from "firebase/auth"
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
-import { getStorage, ref, uploadBytes , getDownloadURL } from "firebase/storage"
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage"
 
 const firebaseConfig = {
   apiKey: "AIzaSyAjNjQ2ywYI_z08aqIBNDNWkigooWafFCg",

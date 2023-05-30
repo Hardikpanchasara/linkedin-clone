@@ -3,6 +3,7 @@ import ReactPlayer from 'react-player'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { postArticleAPI } from '../Redux/Action'
+import { Timestamp } from 'firebase/firestore'
 // import firebase from "firebase"
 
 const PostModal = (props) => {
@@ -40,6 +41,7 @@ const PostModal = (props) => {
       video : videoLink,
       user : user ,
       description : editorText,
+      timestamp :  Timestamp.fromDate(new Date())
     }
 
     PostYourArticle(payload)
@@ -50,21 +52,22 @@ const PostModal = (props) => {
     setVideoLink("")
     setAssetArea(area)
   }
-  const reset = () => {
+  const reset = (e) => {
     setEditorText("");
     setSharedImage('');
     setVideoLink('');
     setAssetArea('');
+    props.handleClick(e)
   }
 
   return (
     <>
-    {props.showModal}
+    {props.showModal === "open" && 
       <Container>
         <Content>
           <Header>
             <h2>Create a Post</h2>
-            <button onclick={(event) => reset(event)}>
+            <button onClick={(event) => reset(event)}>
               <img src="/images/close-icon.png" alt="" />
             </button>
           </Header>
@@ -86,7 +89,7 @@ const PostModal = (props) => {
                 value={editorText}
                 onChange={(e) => setEditorText(e.target.value)}
                 placeholder='What do you want to talk about ?'
-                onFocus={true}
+                // onFocus={true}
               />
 
               {
@@ -153,6 +156,7 @@ const PostModal = (props) => {
           </SharedCreation>
         </Content>
       </Container>
+    }
     </>
   )
 }

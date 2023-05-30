@@ -24,6 +24,7 @@ const Main = (props) => {
       return;
     }
 
+
     switch (showModal) {
       case "open":
         setShowModal("close");
