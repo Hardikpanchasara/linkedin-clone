@@ -88,7 +88,7 @@ export const postArticleAPI = (payload) => {
             console.log(error.code);
           },
           async () => {
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            const downloadURL = await getDownloadURL(ref(storage, `images/${payload.image.name}`));
             // const docRef = doc( Firestore , 'articles');
             // const updateTimestamp = await updateDoc(docRef, {
             //   timestamp: serverTimestamp()
