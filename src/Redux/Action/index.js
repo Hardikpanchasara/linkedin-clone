@@ -66,7 +66,7 @@ export const postArticleAPI = (payload) => {
 
     try {
       if (payload.image) {
-        const uploadTask = uploadBytesResumable(ref(storage, `images/${payload.image.name}`))
+        const uploadTask = uploadBytesResumable(ref(storage, `images/${payload.image.name}`) , payload.image)
 
         uploadTask.on(
           'state_changed',
@@ -89,10 +89,6 @@ export const postArticleAPI = (payload) => {
           },
           async () => {
             const downloadURL = await getDownloadURL(ref(storage, `images/${payload.image.name}`));
-            // const docRef = doc( Firestore , 'articles');
-            // const updateTimestamp = await updateDoc(docRef, {
-            //   timestamp: serverTimestamp()
-            // });
             addDoc(collection(Firestore, "articles"), {
               actor: {
                 description: payload.user.email,

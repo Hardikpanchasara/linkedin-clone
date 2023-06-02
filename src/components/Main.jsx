@@ -46,7 +46,7 @@ const Main = (props) => {
         <ShareBox>
           <div>
             {user && user.photoURL ?
-              (<img src={user.photoURL} alt="" />)
+              (<img src={user.photoURL} alt="User_IMG" />)
               :
               (<img src="/images/user.svg" alt="" />)
             }
@@ -117,7 +117,7 @@ const Main = (props) => {
                           (<ReactPlayer width={'100%'} url={article.video} />)
                           :
                           (
-                            article.sharedImg && <img src={article.sharedImg} alt="" />
+                            article.sharedImg && <img src={article.sharedImg} alt="Shared_Img" />
                           )
                       }
                     </a>
@@ -138,19 +138,19 @@ const Main = (props) => {
 
                   <SocialActions>
                     <button>
-                      <i class="far fa-thumbs-up"></i>
+                      <i className="far fa-thumbs-up"></i>
                       <span>Like</span>
                     </button>
                     <button>
-                      <i class="far fa-comment"></i>
+                      <i className="far fa-comment"></i>
                       <span>Comment</span>
                     </button>
                     <button>
-                      <i class="fas fa-share"></i>
+                      <i className="fas fa-share"></i>
                       <span>Share</span>
                     </button>
                     <button>
-                      <i class="fab fa-telegram-plane"></i>
+                      <i className="fab fa-telegram-plane"></i>
                       <span>Send</span>
                     </button>
                   </SocialActions>
